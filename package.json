@@ -1,0 +1,31 @@
+{
+  "name": "typedoc-plugin-version-select",
+  "version": "0.0.1",
+  "description": "Typedoc plugin to add a version selector next to the title",
+  "type": "module",
+  "main": "dist/index.js",
+  "author": "James Lan",
+  "license": "Apache-2.0",
+  "homepage": "https://jameslan.github.io/typedoc-plugin-version-select/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jameslan/typedoc-plugin-version-select.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "mkdir -p dist/assets && cp src/assets/* dist/assets/ && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "typedoc": "^0.27.6"
+  },
+  "dependencies": {
+    "mustache": "^4.2.0"
+  }
+}

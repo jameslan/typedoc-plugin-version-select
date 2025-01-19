@@ -1,0 +1,5 @@
+{
+    "entryPoints": ["src/index.mts"],
+    "tsconfig": "tsconfig.json",
+    "out": "./_site"
+}

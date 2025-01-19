@@ -1,0 +1,11 @@
+{
+  "include": ["./src/*"],
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "JSX.createElement",
+    "jsxFragmentFactory": "JSX.Fragment",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "./dist"
+  }
+}

@@ -1,17 +1,28 @@
 import * as fs from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Application, JSX, PageEvent, Reflection, Renderer } from 'typedoc';
+import { Application, JSX, OutputSpecification, PageEvent, ParameterType, Reflection, Renderer } from 'typedoc';
 import Mustache from 'mustache';
 
 export function load(app: Application) {
+    const output = app.outputs.getOutputSpecs().find(spec => spec.name === 'html');
+
+    if (output == null) {
+        return;
+    }
+
     setupArgument(app);
     setupPageInjector(app);
-    setupAssets(app);
+    setupAssets(app, output);
 }
 
 function setupArgument(app: Application) {
-    // app.options.addDeclaration({});
+    app.options.addDeclaration({
+        name: 'versionSpecUrl',
+        help: 'Url to the version spec file',
+        type: ParameterType.String,
+        defaultValue: '../versions.json'
+    });
 }
 
 function setupPageInjector(app: Application) {
@@ -64,15 +75,18 @@ function findByProp(element: JSX.Element, name: string, value: string): JSX.Elem
     return findInElement(element);
 }
 
-function setupAssets(app: Application) {
+function setupAssets(app: Application, output: OutputSpecification) {
     app.renderer.on(Renderer.EVENT_END, () => {
         const srcdir = dirname(fileURLToPath(import.meta.url));
-        const dstdir = app.options.getValue('out');
+        const dstdir = output.path;
         const cssfile = 'assets/version-select.css';
         const jsfile = 'assets/version-select.js';
         fs.copyFileSync(join(srcdir, cssfile), join(dstdir, cssfile));
 
-        const script = Mustache.render(fs.readFileSync(join(srcdir, jsfile + '.mustache'), 'utf-8'), {});
+        const script = Mustache.render(
+            fs.readFileSync(join(srcdir, jsfile + '.mustache'), 'utf-8'),
+            { versionSpecUrl: app.options.getValue('versionSpecUrl') },
+        );
         fs.writeFileSync(join(dstdir, jsfile), script);
     });
 }

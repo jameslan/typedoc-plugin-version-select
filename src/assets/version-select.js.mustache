@@ -1,7 +1,7 @@
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
         var entry = document.getElementsByClassName('title')[0].href;
-        fetch(new URL('../versions.json', entry).href).then(function(resp) {
+        fetch(new URL('{{{versionSpecUrl}}}', entry).href).then(function(resp) {
             return resp.json();
         }).then(function(versions) {
             var sel = document.getElementById('version-select');

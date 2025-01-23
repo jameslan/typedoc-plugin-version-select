@@ -2,3 +2,4 @@
 /dist
 /_site
 /typedoc-plugin-version-select-*.tgz
+/coverage

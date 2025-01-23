@@ -1,0 +1,6 @@
+extension:
+  - ts
+  - tsx
+recursive: true
+loader:
+  - ts-node/esm

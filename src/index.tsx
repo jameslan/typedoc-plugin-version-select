@@ -5,15 +5,13 @@ import { Application, JSX, OutputSpecification, PageEvent, ParameterType, Reflec
 import Mustache from 'mustache';
 
 export function load(app: Application) {
-    const output = app.outputs.getOutputSpecs().find(spec => spec.name === 'html');
-
-    if (output == null) {
+    if (!app.outputs.getOutputSpecs().find(spec => spec.name === 'html')) {
         return;
     }
 
     setupArgument(app);
     setupPageInjector(app);
-    setupAssets(app, output);
+    setupAssets(app);
 }
 
 function setupArgument(app: Application) {
@@ -75,10 +73,10 @@ function findByProp(element: JSX.Element, name: string, value: string): JSX.Elem
     return findInElement(element);
 }
 
-function setupAssets(app: Application, output: OutputSpecification) {
-    app.renderer.on(Renderer.EVENT_END, () => {
+function setupAssets(app: Application) {
+    app.renderer.on(Renderer.EVENT_END, (event) => {
         const srcdir = dirname(fileURLToPath(import.meta.url));
-        const dstdir = output.path;
+        const dstdir = event.outputDirectory;
         const cssfile = 'assets/version-select.css';
         const jsfile = 'assets/version-select.js';
         fs.copyFileSync(join(srcdir, cssfile), join(dstdir, cssfile));

@@ -1,5 +1,8 @@
 {
-    "entryPoints": ["src/index.mts"],
+    "entryPoints": ["src/index.tsx"],
+    "projectDocuments": [
+        "example.md"
+    ],
     "tsconfig": "tsconfig.json",
-    "out": "./_site"
+    "plugin": ["./dist/index.js"]
 }

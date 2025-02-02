@@ -18,7 +18,8 @@
     "build": "mkdir -p dist/assets && cp src/assets/* dist/assets/ && tsc",
     "cov": "c8 mocha",
     "prepublishOnly": "npm run build",
-    "test": "mocha"
+    "test": "npm run cov",
+    "doc": "typedoc"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",

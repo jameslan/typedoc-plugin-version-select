@@ -5,7 +5,6 @@ import { Application, DefaultThemeRenderContext, EventHooks, JSX, PageEvent, Ren
 import { expect } from 'chai';
 import tmp from 'tmp';
 import { load } from '../src/index.jsx';
-import { getRandomValues } from 'node:crypto';
 
 // tmp.setGracefulCleanup();
 

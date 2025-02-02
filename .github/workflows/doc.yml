@@ -1,0 +1,47 @@
+name: Doc site build
+on:
+  push:
+    branches:
+      - master
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: '22.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Plugin
+        run: npm run build
+      - name: Build doc
+        run: npm run doc
+      - name: Checkout the site branch
+        uses: actions/checkout@v4
+        with:
+          path: site
+          ref: gh-pages
+      - name: Find variables
+        id: vars
+        # if on master branch push, use "dev", otherwise major.minor
+        run: |
+          [ "$GITHUB_REF_NAME" = "master" ] && (echo version=dev >> $GITHUB_OUTPUT) || (echo version=$GITHUB_REF_NAME | cut -d "." -f 1,2 >> $GITHUB_OUTPUT)
+          echo git_msg=\"$(git log -1 --pretty=format:'%s')\" >> $GITHUB_OUTPUT
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: build site
+        run: |
+          rm -rf site/${{ steps.vars.outputs.version }}
+          mv docs site/${{ steps.vars.outputs.version }}
+      - name: Commit to site branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: site
+          branch: gh-pages
+          commit_message: Doc of version ${{ steps.vars.outputs.version }} generated from ${{ steps.vars.outputs.sha_short }} ${{ steps.vars.outputs.git_msg }}
+          skip_dirty_check: false
+          skip_fetch: true
+          skip_checkout: true

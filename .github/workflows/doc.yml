@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # for committing doc site into gh-pages branch
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js

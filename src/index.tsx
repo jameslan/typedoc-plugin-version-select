@@ -16,8 +16,8 @@ export function load(app: Application) {
 
 function setupArgument(app: Application) {
     app.options.addDeclaration({
-        name: 'versionSpecUrl',
-        help: 'Url to the version spec file',
+        name: 'versionSpecHRef',
+        help: 'href to the version spec file',
         type: ParameterType.String,
         defaultValue: '../versions.json'
     });
@@ -83,7 +83,7 @@ function setupAssets(app: Application) {
 
         const script = Mustache.render(
             fs.readFileSync(join(srcdir, jsfile + '.mustache'), 'utf-8'),
-            { versionSpecUrl: app.options.getValue('versionSpecUrl') },
+            { versionSpecHRef: app.options.getValue('versionSpecHRef') },
         );
         fs.writeFileSync(join(dstdir, jsfile), script);
     });

@@ -61,7 +61,7 @@ describe('plugin', () => {
         const outdir = tmp.dirSync().name;
         fs.mkdirSync(join(outdir, 'assets'));
         endRender({ outputDirectory: outdir } as any);
-        Sinon.assert.calledOnceWithExactly(app.options.getValue as SinonStub, 'versionSpecUrl');
+        Sinon.assert.calledOnceWithExactly(app.options.getValue as SinonStub, 'versionSpecHRef');
         expect(fs.readFileSync(join(outdir, '/assets/version-select.css'), 'utf-8')).to.equal(fs.readFileSync('src/assets/version-select.css', 'utf-8'));
         expect(fs.readFileSync(join(outdir, '/assets/version-select.js'), 'utf-8')).to.include('new URL(\'../versions.json\',');
     });

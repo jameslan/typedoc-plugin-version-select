@@ -23,7 +23,7 @@ npm install --save-dev typedoc-plugin-version-select
 
 ## Options
 
-Option `versionSpecUrl` is used to customize the url of the version data file.
+Option `versionSpecHRef` is used to customize the url of the version data file.
 It can be an absolute URL or a relative path.
 The default value of this option is `../versions.json`.
 

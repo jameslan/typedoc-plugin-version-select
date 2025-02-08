@@ -29,12 +29,12 @@ jobs:
           ref: gh-pages
       - name: Find variables
         id: vars
-        # if on master branch push, use "dev", otherwise major.minor
+        # if on master branch push, use "dev", otherwise major
         run: |
-          [ "$GITHUB_REF_NAME" = "master" ] && (echo version=dev >> $GITHUB_OUTPUT) || (echo version=$GITHUB_REF_NAME | cut -d "." -f 1,2 >> $GITHUB_OUTPUT)
+          [ "$GITHUB_REF_NAME" = "master" ] && (echo version=dev >> $GITHUB_OUTPUT) || (echo version=$GITHUB_REF_NAME | cut -d "." -f 1 >> $GITHUB_OUTPUT)
           echo git_msg=\"$(git log -1 --pretty=format:'%s')\" >> $GITHUB_OUTPUT
           echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: build site
+      - name: Build site
         run: |
           rm -rf site/${{ steps.vars.outputs.version }}
           mv docs site/${{ steps.vars.outputs.version }}

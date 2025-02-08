@@ -1,21 +1,22 @@
-# Version Select Plugin for Typedoc
+# Version Select Plugin for TypeDoc
 
-This plugin adds a version select drop-down besides the title.
+This plugin adds a version select drop-down menu beside the title of the TypeDoc generated document.
 
-A json file describing the items in this select is loaded dynamically.
+TypeDoc generates documentation for current version as a sub-site,
+allowing you to manage the overall site organization.
 
-Typedoc will generate the doc of the current version as a sub-site.
-You can manage how the entire site is organized.
+A dynamically loaded JSON file provides the data of items for the version select.
+
 
 # Usage
 
-## Install the plugin
+## Install the plugin using npm:
 
 ```sh
 npm install --save-dev typedoc-plugin-version-select
 ```
 
-## Apply the plugin in the config
+## Apply the plugin to your configuration file:
 
 ```json
 "plugin": ["typedoc-plugin-version-select"],
@@ -24,25 +25,39 @@ npm install --save-dev typedoc-plugin-version-select
 ## Options
 
 Option `versionSpecHRef` is used to customize the url of the version data file.
-It can be an absolute URL or a relative path.
-The default value of this option is `../versions.json`.
+This option can be set to an absolute URL or a relative path.
+The default value is `../versions.json`.
 
 ## Format of version spec file
 
-It is a json file of an array, each item represent one version.
+The version spec file is a JSON file containing an array of items, where each item represents a version.
 
 | Key | Description |
 |-|-|
 | version | The version string displayed in the version select |
 | url | The URL of the sub-site of this version |
 
+Here’s an example of the version spec file:
 
-# Example
+```json
+[
+  {
+    “version”: “1.0.0”,
+    “url”: “https://jameslan.github.io/typedoc-plugin-version-select/1.0.0”
+  },
+  {
+    “version”: “1.1.0”,
+    “url”: “https://jameslan.github.io/typedoc-plugin-version-select/1.1.0”
+  }
+]
+```
 
-The doc site of this plugin hosted on GitHub is an example of itself.
+# Demo
+
+The documentation site of this plugin hosted on GitHub is an example of itself.
 
 https://jameslan.github.io/typedoc-plugin-version-select/
 
-# Compatible Typedoc versions
+# Compatible TypeDoc versions
 
 - 0.27.x

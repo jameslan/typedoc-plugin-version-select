@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-version-select",
-  "version": "0.0.1",
+  "version": "1.0.1-dev",
   "description": "Typedoc plugin to add a version selector next to the title",
   "type": "module",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
   "homepage": "https://jameslan.github.io/typedoc-plugin-version-select/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:jameslan/typedoc-plugin-version-select.git"
+    "url": "git+ssh://git@github.com/jameslan/typedoc-plugin-version-select.git"
   },
   "files": [
     "dist"

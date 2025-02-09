@@ -1,6 +1,6 @@
 {
   "name": "typedoc-plugin-version-select",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typedoc plugin to add a version selector next to the title",
   "type": "module",
   "main": "dist/index.js",

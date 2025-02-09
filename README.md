@@ -42,12 +42,12 @@ Here’s an example of the version spec file:
 ```json
 [
   {
-    “version”: “1.0.0”,
-    “url”: “https://jameslan.github.io/typedoc-plugin-version-select/1.0.0”
+    "version": "1.0.0",
+    "url": "https://jameslan.github.io/typedoc-plugin-version-select/1.0.0"
   },
   {
-    “version”: “1.1.0”,
-    “url”: “https://jameslan.github.io/typedoc-plugin-version-select/1.1.0”
+    "version": "1.1.0",
+    "url": "https://jameslan.github.io/typedoc-plugin-version-select/1.1.0"
   }
 ]
 ```

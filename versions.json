@@ -1,4 +1,5 @@
 [
     {"version": "v1.0.2", "url": "https://jameslan.github.io/typedoc-plugin-version-select/v1/"},
+    {"version": "v2.0.0", "url": "https://jameslan.github.io/typedoc-plugin-version-select/v2/"},
     {"version": "dev", "url": "https://jameslan.github.io/typedoc-plugin-version-select/dev/"}
 ]

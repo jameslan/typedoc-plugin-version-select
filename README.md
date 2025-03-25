@@ -61,3 +61,4 @@ https://jameslan.github.io/typedoc-plugin-version-select/
 # Compatible TypeDoc versions
 
 - 0.27.x
+- 0.28.x

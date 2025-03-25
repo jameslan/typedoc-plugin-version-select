@@ -36,41 +36,60 @@ function setupPageInjector(app: Application) {
 function toolbar(toolbar: (props: PageEvent<Reflection>) => JSX.Element) {
     return function (props: PageEvent<Reflection>) {
         const origin = toolbar(props);
-        const found = findByProp(origin, 'id', 'tsd-search');
-        found.children.push(<select id='version-select' class='title loading' />);
+        // find the <a> element with class 'title' and inject a <select> element after it
+        findByProp(origin, 'class', 'title', 'a', (elem, indices) => {
+            const index = indices.pop();
+            const children = indices.reduce((arr, idx) => arr[idx], elem.children) as JSX.Children[];
+            children.splice(
+                index + 1,
+                0,
+                <select id='version-select' class='title loading' />,
+            );
+            return true; // no need to continue searching
+        });
         return origin;
     }
 }
 
-function findByProp(element: JSX.Element, name: string, value: string): JSX.Element | undefined {
-    function findInElement(element: JSX.Element) {
-        if (element.props?.[name] === value) {
-            return element;
+function findByProp(
+    root: JSX.Element,
+    name: string,
+    value: string,
+    tagName?: string,
+    cb?: (elem: JSX.Element, indices: number[]) => void) {
+    function findInElement(parent: JSX.Element, element: JSX.Element, indices: number[]) {
+        if ((tagName == null || element.tag === tagName) && element.props?.[name] === value) {
+            if (cb) {
+                return cb(parent, indices.slice());
+            }
         }
-        return findInChildren(element.children);
+        return findInChildren(element, [], element.children);
     }
-    function findInChildren(children: JSX.Children[]) {
-        for (const child of children) {
+    function findInChildren(parent: JSX.Element, indices: number[], children: JSX.Children[]) {
+        const newIndices = indices.slice();
+        newIndices.push(0);
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            newIndices[newIndices.length - 1] = i;
             if (child == null) {
                 continue;
             }
             if (Array.isArray(child)) { // child is JSX.Children[]
-                const found = findInChildren(child);
-                if (found != null) {
-                    return found;
-                }
+                if (findInChildren(parent, newIndices, child)) {
+                    return true;
+                };
                 continue; // didn't find in the child(JSX.Children[]), try next child
             }
             if (typeof child === 'object') { // child is JSX.Element
-                const found = findInElement(child);
-                if (found != null) {
-                    return found;
-                }
+                if (findInElement(parent, child, newIndices)) {
+                    return true;
+                };
             }
         }
-        return undefined; // not found
+        return false; // not found
     }
-    return findInElement(element);
+
+    findInChildren(root, [], root.children);
 }
 
 function setupAssets(app: Application) {
